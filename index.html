@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>活動実績 | FLAT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --flat-orange: #EE5A1E;
+    --flat-orange-deep: #D6480F;
+    --flat-orange-tint: #FFF0E6;
+    --flat-yellow: #FFC629;
+    --flat-cream: #FFF8F0;
+    --flat-ink: #2B2320;
+    --flat-ink-soft: #6B5F58;
+    --flat-line: #F0DFCF;
+    --flat-white: #FFFFFF;
+    --flat-card: #FFFFFF;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --flat-cream: #221A15;
+      --flat-ink: #F5ECE3;
+      --flat-ink-soft: #C9B8AC;
+      --flat-line: #3A2C22;
+      --flat-card: #2B221B;
+      --flat-orange-tint: #3A2313;
+    }
+  }
+  :root[data-theme="dark"] {
+    --flat-cream: #221A15;
+    --flat-ink: #F5ECE3;
+    --flat-ink-soft: #C9B8AC;
+    --flat-line: #3A2C22;
+    --flat-card: #2B221B;
+    --flat-orange-tint: #3A2313;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--flat-cream);
+    color: var(--flat-ink);
+    font-family: "Noto Sans JP", "Hiragino Sans", sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  img, svg { max-width: 100%; }
+
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Header ---------- */
+  header.site {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: var(--flat-white);
+    border-bottom: 1px solid var(--flat-line);
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .logo {
+    font-family: "Zen Maru Gothic", sans-serif;
+    font-weight: 900;
+    font-size: 1.7rem;
+    color: var(--flat-orange);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+  }
+  nav.pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+  nav.pills a {
+    display: inline-block;
+    padding: 9px 20px;
+    border-radius: 999px;
+    border: 1.5px solid var(--flat-orange);
+    color: var(--flat-orange-deep);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  nav.pills a:hover { background: var(--flat-orange-tint); }
+  nav.pills a.current {
+    background: var(--flat-orange);
+    color: var(--flat-white);
+    font-weight: 700;
+  }
+  @media (max-width: 860px) {
+    .header-inner { flex-direction: column; align-items: flex-start; }
+    nav.pills { justify-content: flex-start; }
+    nav.pills a { padding: 7px 14px; font-size: 0.8rem; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    background: linear-gradient(160deg, var(--flat-orange) 0%, var(--flat-orange-deep) 100%);
+    color: var(--flat-white);
+    padding: 64px 0 56px;
+  }
+  .hero-inner {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .hero .eyebrow {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--flat-yellow);
+    margin: 0 0 10px;
+  }
+  .hero h1 {
+    font-family: "Zen Maru Gothic", sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.1rem, 5vw, 3rem);
+    margin: 0 0 16px;
+    line-height: 1.3;
+  }
+  .hero p.lead {
+    max-width: 560px;
+    font-size: 1rem;
+    color: #FFE9DA;
+    margin: 0 0 28px;
+  }
+  .hero .updated {
+    font-size: 0.88rem;
+    color: #FFE9DA;
+    margin: 0;
+  }
+
+  /* ---------- News list ---------- */
+  main { padding: 20px 0 100px; }
+
+  .month-group { display: flex; gap: 32px; padding: 40px 0; border-bottom: 1px solid var(--flat-line); }
+  .month-group:first-child { padding-top: 28px; }
+
+  .month-label {
+    flex-shrink: 0;
+    width: 108px;
+    position: sticky;
+    top: 92px;
+    align-self: flex-start;
+  }
+  .month-label .year { font-size: 0.8rem; color: var(--flat-ink-soft); display: block; }
+  .month-label .month {
+    font-family: "Zen Maru Gothic", sans-serif;
+    font-weight: 900;
+    font-size: 1.8rem;
+    color: var(--flat-orange-deep);
+    display: block;
+    line-height: 1.1;
+  }
+
+  .items { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+
+  .item {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 14px;
+    align-items: baseline;
+    padding: 14px 0;
+    border-top: 1px solid var(--flat-line);
+  }
+  .items .item:first-child { border-top: none; padding-top: 0; }
+
+  .item .day {
+    font-family: "Zen Maru Gothic", sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--flat-ink-soft);
+  }
+
+  .item .text-wrap a, .item .text-wrap span.plain {
+    text-decoration: none;
+    color: var(--flat-ink);
+    font-size: 0.96rem;
+    font-weight: 500;
+  }
+  .item .text-wrap a {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .item .text-wrap a:hover { color: var(--flat-orange-deep); text-decoration: underline; text-underline-offset: 3px; }
+  .item .text-wrap a svg { width: 12px; height: 12px; flex-shrink: 0; align-self: center; opacity: 0.6; }
+
+  @media (max-width: 640px) {
+    .month-group { gap: 16px; padding: 28px 0; }
+    .month-label { width: 64px; position: static; }
+    .month-label .month { font-size: 1.3rem; }
+    .item { grid-template-columns: 30px 1fr; }
+  }
+
+  .empty-state {
+    padding: 60px 24px;
+    text-align: center;
+    color: var(--flat-ink-soft);
+  }
+
+  footer.site {
+    background: var(--flat-ink);
+    color: #E9DED4;
+    padding: 40px 0;
+    text-align: center;
+    font-size: 0.82rem;
+  }
+  footer.site a { color: var(--flat-yellow); text-decoration: none; }
+  footer.site a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="header-inner">
+    <a class="logo" href="https://student.shukatsuflat.com/">FLAT</a>
+    <nav class="pills">
+      <a href="https://student.shukatsuflat.com/">学生団体FLATホームページへ</a>
+      <a href="https://flatview.studio.site/">FLAT-View特設サイトへ</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">FLAT ACTIVITY LOG</p>
+    <h1>活動実績</h1>
+    <p class="updated">最終更新：<span id="statLatest">—</span></p>
+  </div>
+</section>
+
+<main>
+  <div class="wrap">
+    <div id="listRoot"></div>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    学生団体FLAT — 就活キャリア設計コミュニティ ｜ <a href="https://student.shukatsuflat.com/">トップページに戻る</a>
+  </div>
+</footer>
+
+<script>
+// [年, 月, 日, 本文, URL(なければnull)]
+const RAW = [
+[2026,1,6,"蛭川造園土木株式会社　代表者インタビュー実施しました",null],
+[2026,1,9,"佐賀トヨペット株式会社様　代表者インタビュー実施しました",null],
+[2026,1,9,"弘果　弘前中央青果株式会社様　代表者インタビュー実施しました",null],
+[2026,1,9,"マスオグループ　代表者インタビュー実施しました",null],
+[2026,1,13,"フラッグス株式会社様の説明会イベントを開催しました",null],
+[2026,1,14,"東中国スズキ自動車株式会社様の説明会イベントを開催しました",null],
+[2026,1,14,"株式会社エムズサイエンス様の説明会イベントを開催しました",null],
+[2026,1,15,"株式会社大平様　代表者インタビュー実施しました",null],
+[2026,1,16,"マルダイ様の説明会イベントを開催しました",null],
+[2026,1,20,"株式会社アクアリンク様の説明会イベントを開催しました",null],
+[2026,1,21,"宮崎県森林組合連合会様の説明会イベントを開催しました",null],
+[2026,1,21,"阪九フェリー株式会社様の説明会イベントを開催しました",null],
+[2026,1,22,"第29回、企業と学生が本音で話す座談会を実施しました",null],
+[2026,1,22,"東京海上日動ベターライフサポート様の説明会イベントを開催しました",null],
+[2026,1,22,"社会福祉法人聖ヨハネ学園　代表者インタビュー実施しました",null],
+[2026,1,22,"生活協同組合コープおおいた　代表者インタビュー実施しました",null],
+[2026,1,23,"大分県信用組合様　代表者インタビュー実施しました",null],
+[2026,1,23,"ヒルタ工業様の説明会イベントを開催しました",null],
+[2026,1,27,"株式会社ネクストライン様の説明会イベントを開催しました",null],
+[2026,1,30,"株式会社手原産業倉庫様　代表者インタビュー実施しました",null],
+[2026,1,30,"塚田理研工業株式会社様の説明会イベントを開催しました",null],
+[2026,2,3,"株式会社エムズサイエンス様の説明会イベントを開催しました",null],
+[2026,2,3,"株式会社寺尾建設様の説明会イベントを開催しました",null],
+[2026,2,3,"東プレ九州株式会社様の説明会イベントを開催しました",null],
+[2026,2,4,"宮川製作所様の説明会イベントを開催しました",null],
+[2026,2,5,"株式会社リオス様の説明会イベントを開催しました",null],
+[2026,2,5,"ホンダカーズ神奈川西様の説明会イベントを開催しました",null],
+[2026,2,12,"東中国スズキ自動車株式会社様の説明会イベントを開催しました",null],
+[2026,2,12,"フラッグス株式会社様の説明会イベントを開催しました",null],
+[2026,2,12,"日之出紙器工業株式会社　代表者インタビュー実施しました",null],
+[2026,2,17,"株式会社コスモス様の説明会イベントを開催しました",null],
+[2026,2,17,"不二精機株式会社様の説明会イベントを開催しました",null],
+[2026,2,18,"宮川製作所様の説明会イベントを開催しました",null],
+[2026,2,19,"株式会社玉井歯科商店様の説明会イベントを開催しました",null],
+[2026,2,19,"富士岐工産株式会社様の説明会イベントを開催しました",null],
+[2026,2,19,"株式会社早稲田学習研究会様の説明会イベントを開催しました",null],
+[2026,2,20,"泉鋼業株式会社様　代表者インタビュー実施しました",null],
+[2026,2,20,"株式会社ミマキエンジニアリング様の説明会イベントを開催しました",null],
+[2026,2,24,"中島商会様の説明会イベントを開催しました",null],
+[2026,2,24,"東プレ九州株式会社様の説明会イベントを開催しました",null],
+[2026,2,25,"フラッグス株式会社様の説明会イベントを開催しました",null],
+[2026,2,25,"株式会社奈良自動車学校様の説明会イベントを開催しました",null],
+[2026,2,26,"第30回、企業と学生が本音で話す座談会を実施しました",null],
+[2026,2,26,"社会福祉法人さつき福祉会様の説明会イベントを開催しました",null],
+[2026,2,26,"株式会社シムックス様の説明会イベントを開催しました",null],
+[2026,3,3,"株式会社ネクストライン様の説明会イベントを開催しました",null],
+[2026,3,4,"株式会社トムコ様　代表者インタビュー実施しました",null],
+[2026,3,4,"株式会社イデックスリテール福岡様　代表者インタビュー実施しました",null],
+[2026,3,4,"有限会社玉造皆美様　代表者インタビュー実施しました",null],
+[2026,3,4,"株式会社アクアリンク様の説明会イベントを開催しました",null],
+[2026,3,5,"アイスコ様の説明会イベントを開催しました",null],
+[2026,3,6,"株式会社アクアリンク様の説明会イベントを開催しました",null],
+[2026,3,10,"東プレ九州株式会社様の説明会イベントを開催しました",null],
+[2026,3,11,"株式会社山陽設計様　代表者インタビュー実施しました",null],
+[2026,3,11,"暁飯島工業株式会社様の説明会イベントを開催しました",null],
+[2026,3,12,"フラッグス株式会社様の説明会イベントを開催しました",null],
+[2026,3,13,"佐賀トヨペット株式会社様の説明会イベントを開催しました",null],
+[2026,3,17,"富士岐工産株式会社様の説明会イベントを開催しました",null],
+[2026,3,17,"株式会社まるやジャパン様の説明会イベントを開催しました",null],
+[2026,3,18,"三井造船特機エンジニアリング株式会社様の説明会イベントを開催しました",null],
+[2026,3,19,"河野電気株式会社様　代表者インタビュー実施しました",null],
+[2026,3,19,"株式会社エリッツホールディングス様　代表者インタビュー実施しました",null],
+[2026,3,19,"高信化学株式会社様の説明会イベントを開催しました",null],
+[2026,3,19,"東京海上日動ベターライフサービス株式会社様の説明会イベントを開催しました",null],
+[2026,3,19,"堀川観光バス株式会社　代表者インタビュー実施しました",null],
+[2026,3,23,"株式会社クリエアナブキ様　代表者インタビュー実施しました",null],
+[2026,3,23,"フラッグス株式会社様の説明会イベントを開催しました",null],
+[2026,3,24,"塚田理研工業株式会社様の説明会イベントを開催しました",null],
+[2026,3,24,"東京海上日動ベターライフサービス株式会社様の説明会イベントを開催しました",null],
+[2026,3,25,"昌栄運輸株式会社様　代表者インタビュー実施しました",null],
+[2026,3,26,"フュージョン株式会社様の説明会イベントを開催しました",null],
+[2026,3,31,"エム・エス・ケー農業機械株式会社様　代表者インタビュー実施しました",null],
+[2026,4,2,"株式会社ビッグ・エー様の説明会イベントを開催しました",null],
+[2026,4,6,"謝礼をもらって説明会に参加する仕組みの紹介記事を書きました","https://note.com/flat_official/n/nf43c4ab2f260"],
+[2026,4,9,"佐賀トヨペット株式会社様の説明会イベントを開催しました",null],
+[2026,4,10,"泉鋼業株式会社様の説明会イベントを開催しました",null],
+[2026,4,14,"ユービーエム様の説明会イベントを開催しました",null],
+[2026,4,14,"社会福祉法人リガーレ暮らしの架け橋　代表者インタビュー実施しました",null],
+[2026,4,15,"株式会社奈良自動車学校様の説明会イベントを開催しました",null],
+[2026,4,15,"フュージョン株式会社様の説明会イベントを開催しました",null],
+[2026,4,15,"コクヨ山陽四国販売株式会社　代表者インタビュー実施しました",null],
+[2026,4,15,"九州製氷株式会社　代表者インタビュー実施しました",null],
+[2026,4,16,"不二精機株式会社様の説明会イベントを開催しました",null],
+[2026,4,23,"第31回、企業と学生が本音で話す座談会を実施しました",null],
+[2026,4,23,"株式会社アクアリンク様の説明会イベントを開催しました",null],
+[2026,4,23,"川元建設株式会社様の説明会イベントを開催しました",null],
+[2026,4,23,"株式会社エムズサイエンス様の説明会イベントを開催しました",null],
+[2026,4,23,"日之出紙器株式会社様の説明会イベントを開催しました",null],
+[2026,4,24,"佐賀トヨペット株式会社様の説明会イベントを開催しました",null],
+[2026,4,24,"泉鋼業株式会社様の説明会イベントを開催しました",null],
+[2026,4,30,"株式会社マルニ木工様の説明会イベントを開催しました",null],
+[2026,5,7,"株式会社ジョイフル様の説明会イベントを開催しました",null],
+[2026,5,8,"社会福祉法人三活会様の説明会イベントを開催しました",null],
+[2026,5,8,"日之出紙器工業株式会社様の説明会イベントを開催しました",null],
+[2026,5,8,"株式会社クリテック工業様の説明会イベントを開催しました",null],
+[2026,5,11,"泉鋼業株式会社様の説明会イベントを開催しました",null],
+[2026,5,12,"株式会社ジップ様の説明会イベントを開催しました",null],
+[2026,5,13,"有限会社光成工業様　代表者インタビュー実施しました",null],
+[2026,5,13,"フュージョン株式会社様の説明会イベントを開催しました",null],
+[2026,5,18,"株式会社コトブキソリューション様の説明会イベントを開催しました",null],
+[2026,5,19,"AIが苦手な仕事についての解説記事を書きました","https://note.com/flat_official/n/n99a226ec3d88"],
+[2026,5,19,"日之出紙器工業株式会社様の説明会イベントを開催しました",null],
+[2026,5,20,"塚田理研工業株式会社様の説明会イベントを開催しました",null],
+[2026,5,21,"株式会社大同キャスティングス様の説明会イベントを開催しました",null],
+[2026,5,25,"日本ライフサポート株式会社様の説明会イベントを開催しました",null],
+[2026,5,26,"全国農業協同組合連合会長崎県本部様の説明会イベントを開催しました",null],
+[2026,5,27,"スガキコシステムズ株式会社様の説明会イベントを開催しました",null],
+[2026,5,28,"第32回、企業と学生が本音で話す座談会を実施しました",null],
+[2026,5,28,"株式会社アズコムデータセキュリティ様の説明会イベントを開催しました",null],
+[2026,5,29,"株式会社マルニ木工様の説明会イベントを開催しました",null],
+[2026,5,29,"大分県信用組合様の説明会イベントを開催しました",null],
+[2026,5,30,"FLAT-Viewのトップページ記事を書きました","https://note.com/flat_official/n/n43c655830878"],
+[2026,5,30,"FLAT-viewについての紹介記事を書きました","https://note.com/flat_official/n/n26b4bb858f1d"],
+[2026,5,30,"キャリア面談サービスの紹介記事を書きました","https://note.com/flat_official/n/n567c33dff412"],
+[2026,5,31,"就活のノウハウまとめ記事を書きました","https://note.com/flat_official/n/n8c5eb1b40924"],
+[2026,5,31,"AI時代に強いキャリア戦略のコラム記事を書きました","https://note.com/flat_official/n/n72dae7558858"],
+[2026,6,2,"医療法人八女発心会　姫野病院様　代表者インタビュー実施しました",null],
+[2026,6,4,"萩原建設工業株式会社様　代表者インタビュー実施しました",null],
+[2026,6,4,"株式会社アクアリンク様の説明会イベントを開催しました",null],
+[2026,6,5,"株式会社早稲田学習研究会様の説明会イベントを開催しました",null],
+[2026,6,9,"社会福祉法人さつき福祉会様の説明会イベントを開催しました",null],
+[2026,6,9,"株式会社ニチレイウエルダイニング様の説明会イベントを開催しました",null],
+[2026,6,10,"株式会社エムズサイエンス様の説明会イベントを開催しました",null],
+[2026,6,10,"株式会社ナウエル　代表者インタビュー実施しました",null],
+[2026,6,11,"ボンドエンジニアリング株式会社様　代表者インタビュー実施しました",null],
+[2026,6,12,"佐賀トヨペット株式会社様の説明会イベントを開催しました",null],
+[2026,6,12,"株式会社静岡産業社様の説明会イベントを開催しました",null],
+[2026,6,16,"社会福祉法人三活会様の説明会イベントを開催しました",null],
+[2026,6,16,"株式会社新来島サノヤス造船様の説明会イベントを開催しました",null],
+[2026,6,17,"富士高分子株式会社様の説明会イベントを開催しました",null],
+[2026,6,18,"一関市役所様の説明会イベントを開催しました",null],
+[2026,6,22,"ロジスティード北日本株式会社　代表者インタビュー実施しました",null],
+[2026,6,24,"株式会社奈良自動車学校様の説明会イベントを開催しました",null],
+[2026,6,24,"不二精機株式会社様の説明会イベントを開催しました",null],
+[2026,6,25,"第33回、企業と学生が本音で話す座談会を実施しました",null],
+[2026,6,25,"日之出紙器工業株式会社様の説明会イベントを開催しました",null],
+[2026,6,30,"株式会社アクアリンク様の説明会イベントを開催しました",null],
+[2026,6,30,"向洋電機株式会社様の説明会イベントを開催しました",null],
+[2026,6,30,"株式会社早稲田学習研究会様の説明会イベントを開催しました",null],
+[2026,7,1,"フラッグス株式会社様の説明会イベントを開催しました",null],
+[2026,7,8,"東京ガスエコモ株式会社様の説明会イベントを開催しました",null],
+[2026,7,8,"株式会社寺尾建設様の説明会イベントを開催しました",null],
+[2026,7,8,"大分県信用組合様の説明会イベントを開催しました",null],
+[2026,7,8,"ナカシマヘルスフォース株式会社　代表者インタビュー実施しました",null],
+[2026,7,8,"社会福祉法人大阪福祉事業財団　代表者インタビュー実施しました",null],
+[2026,7,9,"古手川産業株式会社様の説明会イベントを開催しました",null],
+[2026,7,9,"株式会社アトラクティブ様の説明会イベントを開催しました",null],
+[2026,7,10,"第34回、企業と学生が本音で話す座談会を実施しました",null],
+[2026,7,10,"フラッグス株式会社様の説明会イベントを開催しました",null],
+[2026,7,16,"富士高分子株式会社様の説明会イベントを開催しました",null],
+[2026,7,21,"株式会社メディアステーション様の説明会イベントを開催しました",null],
+[2026,7,22,"株式会社コトブキソリューション様の説明会イベントを開催しました",null],
+[2026,7,23,"第35回、企業と学生が本音で話す座談会を実施しました",null],
+[2026,7,23,"昭和スプリング株式会社　代表者インタビュー実施しました",null],
+[2026,7,23,"株式会社システムズナカシマ　代表者インタビュー実施しました",null],
+[2026,7,23,"クラシックマネジメントグループ株式会社　代表者インタビュー実施しました",null],
+[2026,7,24,"有限会社光成工業様の説明会イベントを開催しました",null],
+[2026,7,27,"株式会社早稲田学習研究会様の説明会イベントを開催しました",null],
+[2026,7,31,"社会福祉法人さつき福祉会様の説明会イベントを開催しました",null],
+[2026,7,31,"株式会社アクアリンク様の説明会イベントを開催しました",null],
+[2026,8,1,"自動車部品メーカー業界の業界研究記事を書きました","https://note.com/flat_official/n/n5873f64b4dd5"],
+[2026,8,1,"社会福祉法人業界の業界研究記事を書きました","https://note.com/flat_official/n/n18a28d8beeae"],
+[2026,8,1,"カーディーラー業界の業界研究記事を書きました","https://note.com/flat_official/n/nb2b1d0e77807"],
+[2026,8,3,"株式会社こっこー様　代表者インタビュー実施しました",null],
+[2026,8,4,"日本スウェージロックFST株式会社様　代表者インタビュー実施しました",null],
+[2026,8,5,"フラッグス株式会社様の説明会イベントを開催しました",null],
+[2026,8,6,"株式会社深松組様　代表者インタビュー実施しました",null],
+[2026,8,6,"冠婚葬祭業界の業界研究記事を書きました","https://note.com/flat_official/n/ncf1647aeb966"],
+[2026,8,6,"株式会社ナウエル様の説明会イベントを開催しました",null],
+[2026,8,6,"トヨタカローラ山口株式会社様の説明会イベントを開催しました",null],
+[2026,8,10,"株式会社マルイチ様　代表者インタビュー実施しました",null],
+[2026,8,14,"学生団体FLATの紹介記事を書きました","https://note.com/flat_official/n/n124f84fda8ff"],
+[2026,8,14,"第36回、企業と学生が本音で話す座談会を実施しました",null],
+[2026,8,17,"株式会社ソフネット様　代表者インタビュー実施しました",null],
+[2026,8,17,"プラスチック射出成形業界の業界研究記事を書きました","https://note.com/flat_official/n/n60656d58af3a"],
+[2026,8,17,"住宅建材・高分子化学メーカー業界の業界研究記事を書きました","https://note.com/flat_official/n/n21205232dbcc"],
+[2026,8,17,"「含浸」の専門用語解説記事を書きました","https://note.com/flat_official/n/nd910a39895e0"],
+[2026,8,18,"社会福祉法人あゆみ福祉会様　代表者インタビュー実施しました",null],
+[2026,8,18,"不動産業界の業界研究記事を書きました","https://note.com/flat_official/n/n0ae3c2dc6092"],
+[2026,8,18,"富士高分子株式会社様の説明会イベントを開催しました",null],
+[2026,8,18,"株式会社別大興産様の説明会イベントを開催しました",null],
+[2026,8,18,"不二精機株式会社様の説明会イベントを開催しました",null],
+[2026,8,19,"社会福祉法人三活会様の説明会イベントを開催しました",null],
+[2026,8,21,"株式会社岡山トヨタシステムサービス　代表者インタビュー実施しました",null],
+[2026,8,24,"株式会社ヒロホールディングス様　代表者インタビュー実施しました",null],
+[2026,8,24,"富士岐工産株式会社様の説明会イベントを開催しました",null],
+[2026,8,26,"農水フーヅ株式会社　代表者インタビュー実施しました",null],
+[2026,8,27,"就活の有償化についてのコラム記事を書きました","https://note.com/flat_official/n/n0b230bb6998c"],
+[2026,8,27,"第37回、企業と学生が本音で話す座談会を実施しました",null],
+[2026,8,28,"フラッグス株式会社様の説明会イベントを開催しました",null],
+[2026,8,31,"愛媛ダイハツ販売株式会社様　代表者インタビュー実施しました",null],
+[2026,8,31,"塾業界の業界研究記事を書きました","https://note.com/flat_official/n/n4af23698f928"],
+[2026,8,31,"株式会社早稲田学習研究会様の説明会イベントを開催しました",null],
+[2026,9,1,"ゴルフ業界の業界研究記事を書きました","https://note.com/flat_official/n/ndffd235d87e0"],
+[2026,9,1,"不二精機株式会社様の説明会イベントを開催しました",null],
+[2026,9,1,"クラシックマネジメントグループ株式会社様の説明会イベントを開催しました",null],
+[2026,9,1,"株式会社寺尾建設様のイベント参加者の口コミページ（FLAT-voice）を作成しました","https://voice.shukatsuflat.com/terao-const.html"],
+[2026,9,3,"タカギ産業株式会社様　代表者インタビュー実施しました",null],
+[2026,9,3,"Z世代就活生座談会のレポート記事を書きました","https://note.com/flat_official/n/n44916e6696a8"],
+[2026,9,3,"社会福祉法人さつき福祉会様のイベント参加者の口コミページ（FLAT-voice）を作成しました","https://voice.shukatsuflat.com/satsuki-fukushikai.html"],
+[2026,9,4,"株式会社宝塚かもめタクシー様　代表者インタビュー実施しました",null],
+[2026,9,7,"奥野製薬工業株式会社様　代表者インタビュー実施しました",null],
+[2026,9,7,"株式会社ナウエル様の説明会イベントを開催しました",null],
+[2026,9,7,"フラッグス株式会社様のイベント参加者の口コミページ（FLAT-voice）を作成しました","https://voice.shukatsuflat.com/flagxs.html"],
+[2026,9,7,"富士高分子株式会社様のイベント参加者の口コミページ（FLAT-voice）を作成しました","https://voice.shukatsuflat.com/f-kobunshi.html"],
+[2026,9,8,"インテリア・内装仕上げ材業界の業界研究記事を書きました","https://note.com/flat_official/n/n0829fe6a40e7"],
+[2026,9,8,"環境ビジネス（水資源）業界の業界研究記事を書きました","https://note.com/flat_official/n/na0c68e5adcaa"],
+[2026,9,8,"株式会社エムアンドアール様の説明会イベントを開催しました",null],
+[2026,9,8,"大分県信用組合様の説明会イベントを開催しました",null],
+[2026,9,8,"東リ株式会社様の説明会イベントを開催しました",null],
+[2026,9,8,"株式会社アクアリンク様の説明会イベントを開催しました",null],
+[2026,9,8,"株式会社アクアリンク様のイベント参加者の口コミページ（FLAT-voice）を作成しました","https://voice.shukatsuflat.com/aqualink.html"],
+[2026,9,9,"株式会社日進観光様　代表者インタビュー実施しました",null],
+[2026,9,9,"富士高分子株式会社様の説明会イベントを開催しました",null]
+];
+
+const ICONS = {
+  external: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6M10 14 21 3"/></svg>'
+};
+
+const DATA = RAW.map(([y, m, d, text, url]) => ({ y, m, d, text, url }))
+  .sort((a, b) => (b.y - a.y) || (b.m - a.m) || (b.d - a.d));
+
+function renderStats() {
+  const latest = DATA[0];
+  document.getElementById("statLatest").textContent = `${latest.y}年${latest.m}月${latest.d}日`;
+}
+
+function renderList() {
+  const root = document.getElementById("listRoot");
+
+  const groups = [];
+  let currentKey = null;
+  DATA.forEach(item => {
+    const key = `${item.y}-${item.m}`;
+    if (key !== currentKey) {
+      groups.push({ y: item.y, m: item.m, items: [] });
+      currentKey = key;
+    }
+    groups[groups.length - 1].items.push(item);
+  });
+
+  root.innerHTML = groups.map(g => `
+    <div class="month-group">
+      <div class="month-label">
+        <span class="year">${g.y}</span>
+        <span class="month">${g.m}月</span>
+      </div>
+      <div class="items">
+        ${g.items.map(item => {
+          const body = item.url
+            ? `<a href="${item.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.text)}${ICONS.external}</a>`
+            : `<span class="plain">${escapeHtml(item.text)}</span>`;
+          return `
+            <div class="item">
+              <div class="day">${item.d}日</div>
+              <div class="text-wrap">${body}</div>
+            </div>
+          `;
+        }).join("")}
+      </div>
+    </div>
+  `).join("");
+}
+
+function escapeHtml(str) {
+  return str.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+renderStats();
+renderList();
+</script>
+</body>
+</html>
