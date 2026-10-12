@@ -139,6 +139,11 @@
     color: #FFE9DA;
     margin: 0 0 28px;
   }
+  .hero .pr-note {
+    font-size: 0.78rem;
+    color: #FFE9DA;
+    margin: 8px 0 0;
+  }
   .hero .updated {
     font-size: 0.88rem;
     color: #FFE9DA;
@@ -242,6 +247,7 @@
     <p class="eyebrow">FLAT ACTIVITY LOG</p>
     <h1>活動実績</h1>
     <p class="updated">最終更新：<span id="statLatest">—</span></p>
+    <p class="pr-note">PR：掲載している企業様の取り組みには、株式会社MoreVisionのサービスを通じたものを含みます。</p>
   </div>
 </section>
 
@@ -258,6 +264,7 @@
 </footer>
 
 <script>
+// 予備データ：シートが読めなかったときだけ使う（2026/10/12時点のシートの中身）
 // [年, 月, 日, 本文, URL(なければnull)]
 const RAW = [
 [2026,1,6,"蛭川造園土木株式会社　代表者インタビュー実施しました",null],
@@ -483,19 +490,82 @@ const RAW = [
 [2026,9,15,"フラッグス株式会社様の説明会イベントを開催しました",null],
 [2026,9,16,"株式会社PLANT様の説明会イベントを開催しました",null],
 [2026,9,16,"全国農業協同組合連合会長崎県本部様の説明会イベントを開催しました",null],
-[2026,9,16,"JA全農（農業協同組合連合会）業界の業界研究記事を書きました","https://note.com/flat_official/n/n68c5f4ead3e1"]
+[2026,9,16,"JA全農（農業協同組合連合会）業界の業界研究記事を書きました","https://note.com/flat_official/n/n68c5f4ead3e1"],
+[2026,9,24,"第39回、企業と学生が本音で話す座談会を実施しました",null],
+[2026,9,24,"日本スウェージロックFST株式会社様の説明会イベントを開催しました",null],
+[2026,9,24,"外資系メーカー業界の業界研究記事を書きました","https://note.com/flat_official/n/ne00afc5c1f4a"],
+[2026,9,25,"物流機器メーカー業界の業界研究記事を書きました","https://note.com/flat_official/n/n60a561a222c3"],
+[2026,9,28,"株式会社五星様　代表者インタビュー実施しました",null],
+[2026,9,28,"株式会社寺尾建設様の説明会イベントを開催しました",null],
+[2026,9,28,"建設業界（施工管理）の業界研究記事を書きました","https://note.com/flat_official/n/nb31bded39359"],
+[2026,9,29,"熊本県信用組合様　代表者インタビュー実施しました",null],
+[2026,9,29,"社会福祉法人さつき福祉会様の説明会イベントを開催しました",null],
+[2026,9,29,"有限会社光成工業様の説明会イベントを開催しました",null],
+[2026,9,30,"株式会社さんびる様　代表者インタビュー実施しました",null],
+[2026,9,30,"東リ株式会社様の説明会イベントを開催しました",null],
+[2026,9,30,"アクアリンクの評判・社風の紹介記事を書きました","https://note.com/flat_official/n/ne33f31949c50"],
+[2026,10,3,"さつき福祉会の評判・社風の紹介記事を書きました","https://note.com/flat_official/n/n7fd3e4d54755"],
+[2026,10,3,"寺尾建設の評判・社風の紹介記事を書きました","https://note.com/flat_official/n/n23c86b1d5a95"],
+[2026,10,5,"ハシダ技研工業株式会社様　代表者インタビュー実施しました",null],
+[2026,10,7,"株式会社アリオンシステム様　代表者インタビュー実施しました",null],
+[2026,10,7,"クラシックマネジメントグループ株式会社様の説明会イベントを開催しました",null],
+[2026,10,7,"西濃運輸株式会社様の説明会イベントを開催しました",null],
+[2026,10,7,"企業間物流（BtoB物流）業界の業界研究記事を書きました","https://note.com/flat_official/n/n6da1c8be6a7b"],
+[2026,10,9,"第40回、企業と学生が本音で話す座談会を実施しました",null],
+[2026,10,9,"株式会社ナウエル様のイベント参加者の口コミページ（FLAT-voice）を作成しました","https://voice.shukatsuflat.com/nowl.html"],
+[2026,10,12,"富士岐工産株式会社様のイベント参加者の口コミページ（FLAT-voice）を作成しました","https://voice.shukatsuflat.com/fujikikosan.html"],
+[2026,10,12,"株式会社コトブキソリューション様のイベント参加者の口コミページ（FLAT-voice）を作成しました","https://voice.shukatsuflat.com/ksol.html"],
+[2026,10,12,"東プレ九州株式会社様のイベント参加者の口コミページ（FLAT-voice）を作成しました","https://voice.shukatsuflat.com/topre-kyushu.html"]
 ];
+
+
+// ===== シートから読む設定 =====
+// 「FLAT活動実績」シート1を「ウェブに公開」したCSVのURL
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR_UXAYqqsyQ57Shgh1L5Vyobp3gnTusVxECakf1Rvp6kywlK05uAIUTH1x4XoahC8XI7Tw2i-zLk9Y/pub?gid=0&single=true&output=csv";
+
+function parseCsv(text) {
+  const rows = [];
+  let row = [], field = "", inQuotes = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (inQuotes) {
+      if (c === '"' && text[i + 1] === '"') { field += '"'; i++; }
+      else if (c === '"') inQuotes = false;
+      else field += c;
+    } else if (c === '"') inQuotes = true;
+    else if (c === ",") { row.push(field); field = ""; }
+    else if (c === "\n" || c === "\r") {
+      if (c === "\r" && text[i + 1] === "\n") i++;
+      row.push(field); rows.push(row); row = []; field = "";
+    } else field += c;
+  }
+  if (field !== "" || row.length) { row.push(field); rows.push(row); }
+  return rows;
+}
+
+// 年・月が数字で、本文がある行だけを使う（見出し行や空行は飛ばす）
+function rowsFromCsv(text) {
+  return parseCsv(text).map(r => {
+    const y = parseInt(r[0], 10), m = parseInt(r[1], 10), d = parseInt(r[2], 10);
+    const body = (r[3] || "").trim(), url = (r[4] || "").trim();
+    if (!y || !m || !body) return null;
+    return [y, m, d || 0, body, /^https?:\/\//.test(url) ? url : null];
+  }).filter(Boolean);
+}
 
 const ICONS = {
   external: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6M10 14 21 3"/></svg>'
 };
 
-const DATA = RAW.map(([y, m, d, text, url]) => ({ y, m, d, text, url }))
-  .sort((a, b) => (b.y - a.y) || (b.m - a.m) || (b.d - a.d));
+let DATA = [];
+function setData(raw) {
+  DATA = raw.map(([y, m, d, text, url]) => ({ y, m, d, text, url }))
+    .sort((a, b) => (b.y - a.y) || (b.m - a.m) || (b.d - a.d));
+}
 
 function renderStats() {
   const latest = DATA[0];
-  document.getElementById("statLatest").textContent = `${latest.y}年${latest.m}月${latest.d}日`;
+  document.getElementById("statLatest").textContent = latest.d ? `${latest.y}年${latest.m}月${latest.d}日` : `${latest.y}年${latest.m}月`;
 }
 
 function renderList() {
@@ -525,7 +595,7 @@ function renderList() {
             : `<span class="plain">${escapeHtml(item.text)}</span>`;
           return `
             <div class="item">
-              <div class="day">${item.d}日</div>
+              <div class="day">${item.d ? item.d + "日" : ""}</div>
               <div class="text-wrap">${body}</div>
             </div>
           `;
@@ -539,8 +609,18 @@ function escapeHtml(str) {
   return str.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 
-renderStats();
-renderList();
+function render(raw) {
+  setData(raw);
+  renderStats();
+  renderList();
+}
+
+// まず予備データで表示し、シートが読めたら最新の中身に差し替える
+render(RAW);
+fetch(SHEET_CSV_URL, { cache: "no-store" })
+  .then(res => { if (!res.ok) throw new Error(res.status); return res.text(); })
+  .then(text => { const rows = rowsFromCsv(text); if (rows.length) render(rows); })
+  .catch(err => console.warn("活動実績シートを読めなかったため、予備データで表示しています", err));
 </script>
 </body>
 </html>
